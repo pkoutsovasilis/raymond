@@ -9,7 +9,8 @@ import (
 // whitespaceVisitor walks through the AST to perform whitespace control
 //
 // The logic was shamelessly borrowed from:
-//   https://github.com/wycats/handlebars.js/blob/master/lib/handlebars/compiler/whitespace-control.js
+//
+//	https://github.com/wycats/handlebars.js/blob/master/lib/handlebars/compiler/whitespace-control.js
 type whitespaceVisitor struct {
 	isRootSeen bool
 }
@@ -217,8 +218,6 @@ func (v *whitespaceVisitor) VisitProgram(program *ast.Program) interface{} {
 					prog = b.Inverse
 				}
 
-				omitRightFirst(prog.Body, false)
-
 				// Strip out the previous content node if it's whitespace only
 				omitLeft(body, i, false)
 			}
@@ -276,12 +275,15 @@ func (v *whitespaceVisitor) VisitBlock(block *ast.BlockStatement) interface{} {
 		closeProg = program
 	}
 
-	strip := &ast.Strip{
-		Open:  (block.OpenStrip != nil) && block.OpenStrip.Open,
-		Close: (block.CloseStrip != nil) && block.CloseStrip.Close,
+	blockOpen := (block.OpenStrip != nil) && block.OpenStrip.Open
+	blockClose := (block.CloseStrip != nil) && block.CloseStrip.Close
 
-		OpenStandalone:  isNextWhitespace(program.Body),
-		CloseStandalone: isPrevWhitespace(closeProg.Body),
+	strip := &ast.Strip{
+		Open:  blockOpen,
+		Close: blockClose,
+
+		OpenStandalone:  blockOpen && isNextWhitespace(program.Body),
+		CloseStandalone: blockClose && isPrevWhitespace(closeProg.Body),
 	}
 
 	if (block.OpenStrip != nil) && block.OpenStrip.Close {
