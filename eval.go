@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mailgun/raymond/v2/ast"
+	"github.com/pkoutsovasilis/raymond/v2/ast"
 )
 
 var (

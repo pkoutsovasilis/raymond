@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/mailgun/raymond/v2"
+	"github.com/pkoutsovasilis/raymond/v2"
 )
 
 //
