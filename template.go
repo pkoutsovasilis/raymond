@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/mailgun/raymond/v2/ast"
-	"github.com/mailgun/raymond/v2/parser"
+	"github.com/pkoutsovasilis/raymond/v2/ast"
+	"github.com/pkoutsovasilis/raymond/v2/parser"
 )
 
 // Template represents a handlebars template.
